@@ -12,7 +12,7 @@ This script generates an `llms.txt` and `llms-full.txt`  file for Laravel Bluepr
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/your-repository.git`
+1. Clone the repository: `git clone github.com:minthemiddle/llmstxt-generator.git`
 2. Install dependencies using Composer: `composer install`
 
 ## Usage
