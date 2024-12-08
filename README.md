@@ -1,6 +1,6 @@
-# Laravel Blueprint Documentation Generator
+# Laravel Blueprint llms.txt and llms-full.txt Generator
 
-This script generates an `llms.txt` file for Laravel Blueprint by scraping the repository documentation from GitHub. The `llms.txt` file is used for creating a structured overview of the documentation, which can be useful for learning and reference.
+This script generates an `llms.txt` and `llms-full.txt`  file for Laravel Blueprint by scraping the repository documentation from GitHub. The files are used for creating a structured overview of the documentation, which can be useful for LLMs, both for learning and building up-to-date context.
 
 ## Features
 
@@ -8,32 +8,16 @@ This script generates an `llms.txt` file for Laravel Blueprint by scraping the r
 - Extracts the description from the `index.blade.php` file.
 - Parses the navigation structure from the `navigation.php` file.
 - Generates an `llms.txt` file with a structured format.
-
-## Requirements
-
-- PHP 7.2 or higher
-- Guzzle HTTP client
-- Symfony DomCrawler component
+- Generates an `llms-full.txt` file with the content of the full documentation.
 
 ## Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-repository.git
-   cd your-repository
-   ```
-
-2. Install dependencies using Composer:
-   ```bash
-   composer install
-   ```
+1. Clone the repository: `git clone https://github.com/your-repository.git`
+2. Install dependencies using Composer: `composer install`
 
 ## Usage
 
-1. Run the script:
-   ```bash
-   php generate-llmstxt.php
-   ```
+`php generate-llmstxt.php`
 
 2. The script will generate two files:
    - `llms.txt` - Basic documentation index with links
