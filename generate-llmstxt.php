@@ -32,7 +32,7 @@ function extract_description_from_index(string $index_content): string
     }
 }
 
-function build_llms_txt(string $base_url, string $repo_path): string
+function build_llms_txt(string $base_url, string $repo_path, bool $full_content): string
 {
     $index_url = "{$base_url}/{$repo_path}/master/source/index.blade.php";
     $navigation_url = "{$base_url}/{$repo_path}/master/navigation.php";
@@ -65,12 +65,18 @@ function build_llms_txt(string $base_url, string $repo_path): string
             if (isset($data['url'])) {
                 $markdown_url = str_replace('/docs/', '/source/docs/', $data['url']) . '.md';
                 $llms_txt_content .= "- [{$section}]({$base_url}/{$repo_path}/master{$markdown_url})\n";
+                if ($full_content) {
+                    $llms_txt_content .= get_document_content($base_url, $repo_path, $markdown_url);
+                }
             }
 
             if (isset($data['children'])) {
                 foreach ($data['children'] as $sub_section => $sub_url) {
                     $markdown_url = str_replace('/docs/', '/source/docs/', $sub_url) . '.md';
                     $llms_txt_content .= "- [{$sub_section}]({$base_url}/{$repo_path}/master{$markdown_url})\n";
+                    if ($full_content) {
+                        $llms_txt_content .= get_document_content($base_url, $repo_path, $markdown_url);
+                    }
                 }
             }
         }
@@ -82,9 +88,16 @@ function build_llms_txt(string $base_url, string $repo_path): string
 // --- Main execution ---
 $github_raw_base_url = "https://raw.githubusercontent.com";
 $repo_path = "laravel-shift/blueprint-docs/refs/heads";
+$full_content = false;
 
-$llms_txt = build_llms_txt($github_raw_base_url, $repo_path);
+// Parse command-line arguments
+$options = getopt("", ["full"]);
+if (isset($options['full'])) {
+    $full_content = true;
+}
+
+$llms_txt = build_llms_txt($github_raw_base_url, $repo_path, $full_content);
 
 if ($llms_txt) {
-    file_put_contents("llms.txt", $llms_txt);
+    file_put_contents($full_content ? "llms-full.txt" : "llms.txt", $llms_txt);
 }
