@@ -90,16 +90,16 @@ $github_raw_base_url = "https://raw.githubusercontent.com";
 $repo_path = "laravel-shift/blueprint-docs/refs/heads";
 $full_content = false;
 
-// Parse command-line arguments
-$options = getopt("", ["full"]);
-if (isset($options['full'])) {
-    $full_content = true;
+// Generate basic version
+$llms_txt = build_llms_txt($github_raw_base_url, $repo_path, false);
+if ($llms_txt) {
+    file_put_contents("llms.txt", $llms_txt);
 }
 
-$llms_txt = build_llms_txt($github_raw_base_url, $repo_path, $full_content);
-
-if ($llms_txt) {
-    file_put_contents($full_content ? "llms-full.txt" : "llms.txt", $llms_txt);
+// Generate full version
+$llms_txt_full = build_llms_txt($github_raw_base_url, $repo_path, true);
+if ($llms_txt_full) {
+    file_put_contents("llms-full.txt", $llms_txt_full);
 }
 
 function get_document_content(string $base_url, string $repo_path, string $markdown_url): string

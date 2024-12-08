@@ -32,16 +32,12 @@ This script generates an `llms.txt` file for Laravel Blueprint by scraping the r
 
 1. Run the script:
    ```bash
-   # Generate basic documentation index
    php generate-llmstxt.php
-
-   # Generate full documentation with complete content
-   php generate-llmstxt.php --full
    ```
 
-2. The script will generate one of these files:
-   - `llms.txt` - Basic documentation index with links (default)
-   - `llms-full.txt` - Complete documentation including full content of all linked documents (when using --full)
+2. The script will generate two files:
+   - `llms.txt` - Basic documentation index with links
+   - `llms-full.txt` - Complete documentation including full content of all linked documents
 
 ## Notes
 
