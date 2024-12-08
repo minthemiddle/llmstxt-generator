@@ -1,3 +1,4 @@
 *.txt
 composer.lock
 vendor
+context
