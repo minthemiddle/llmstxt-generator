@@ -101,3 +101,16 @@ $llms_txt = build_llms_txt($github_raw_base_url, $repo_path, $full_content);
 if ($llms_txt) {
     file_put_contents($full_content ? "llms-full.txt" : "llms.txt", $llms_txt);
 }
+
+function get_document_content(string $base_url, string $repo_path, string $markdown_url): string
+{
+    $document_url = "{$base_url}/{$repo_path}/master{$markdown_url}";
+    try {
+        $document_content = get_content($document_url);
+        return "\n" . $document_content . "\n";
+    } catch (Exception $e) {
+        echo "Error fetching document content: " . $e->getMessage() . "\n";
+        return "";
+    }
+}
+?>
