@@ -53,19 +53,26 @@ function build_llms_txt(string $base_url, string $repo_path): string
     // Evaluate the navigation.php content to get the array
     $navigation = eval(str_replace('<?php', '', $navigation_content));
 
+    $current_section = "";
+
     foreach ($navigation as $section => $data) {
         if (is_array($data)) {
-            $llms_txt_content .= "## {$section}\n";
-            if (isset($data['url'])) {
-                $llms_txt_content .= "- [{$section}](" . "https://laravel-shift.github.io/blueprint" . "{$data['url']})\n";
+            if ($current_section !== $section) {
+                $llms_txt_content .= "## {$section}\n";
+                $current_section = $section;
             }
+
+            if (isset($data['url'])) {
+                $markdown_url = str_replace('/docs/', '/source/docs/', $data['url']) . '.md';
+                $llms_txt_content .= "- [{$section}]({$base_url}/{$repo_path}/master{$markdown_url})\n";
+            }
+
             if (isset($data['children'])) {
                 foreach ($data['children'] as $sub_section => $sub_url) {
-                    $llms_txt_content .= "- [{$sub_section}](" . "https://laravel-shift.github.io/blueprint" . "{$sub_url})\n";
+                    $markdown_url = str_replace('/docs/', '/source/docs/', $sub_url) . '.md';
+                    $llms_txt_content .= "- [{$sub_section}]({$base_url}/{$repo_path}/master{$markdown_url})\n";
                 }
             }
-        } else {
-            $llms_txt_content .= "- [{$section}](" . "https://laravel-shift.github.io/blueprint" . "{$data})\n";
         }
     }
 
@@ -79,6 +86,5 @@ $repo_path = "laravel-shift/blueprint-docs/refs/heads";
 $llms_txt = build_llms_txt($github_raw_base_url, $repo_path);
 
 if ($llms_txt) {
-    echo $llms_txt;
     file_put_contents("llms.txt", $llms_txt);
 }
