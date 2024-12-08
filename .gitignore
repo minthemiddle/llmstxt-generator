@@ -4,3 +4,4 @@ vendor
 context
 .aider*
 .env
+output
