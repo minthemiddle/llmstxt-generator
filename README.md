@@ -19,9 +19,9 @@ This script generates an `llms.txt` and `llms-full.txt`  file for Laravel Bluepr
 
 `php generate-llmstxt.php`
 
-2. The script will generate two files:
-   - `llms.txt` - Basic documentation index with links
-   - `llms-full.txt` - Complete documentation including full content of all linked documents
+2. The script will generate two files in the `output` directory:
+   - `output/llms.txt` - Basic documentation index with links
+   - `output/llms-full.txt` - Complete documentation including full content of all linked documents
 
 ## Notes
 
